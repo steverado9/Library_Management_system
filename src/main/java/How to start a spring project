@@ -1,0 +1,22 @@
+1)Go to https://start.spring.io
+2)Fill in project details:
+-Project: Maven
+-Language: Java
+-Spring Boot: (choose stable, e.g., 3.3.x)
+-Group: com.example
+-Artifact: name of the project
+
+3)Dependencies: e.g.
+-Spring Boot DevTools Developer Tools
+-Spring Web
+-Spring Data JPA
+-MySQL Driver
+-Thymeleaf
+
+4)Click Generate – it will download a .zip.
+
+5)Extract the .zip.
+
+6)In IntelliJ:
+Click File → Open
+Select the extracted project folder (the one with pom.xml inside).
