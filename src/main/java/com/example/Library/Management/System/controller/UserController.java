@@ -3,6 +3,7 @@ package com.example.Library.Management.System.controller;
 import com.example.Library.Management.System.entity.User;
 import com.example.Library.Management.System.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,19 +25,33 @@ public class UserController {
         User loggedInuser = (User) session.getAttribute("loggedInUser");
 
         //if no user is login, send to login page
-//        if (loggedInuser == null) {
-//            return "redirect:/";
-//        }
+        if (loggedInuser == null) {
+            return "redirect:/sign_in";
+        }
 
         User user = new User();
         model.addAttribute("user", user);
         return "create_user";
     }
 
-//    @PostMapping("/create_user")
-//    public String saveUser(@ModelAttribute("user") User user, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-//
-//    }
+    @PostMapping("/create_user")
+    public String saveUser(@ModelAttribute("user") User user, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        try {
+            User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+            if (loggedInUser == null) {
+                return "redirect:/sign_in";
+            }
+
+            userService.saveUser(user);
+            redirectAttributes.addFlashAttribute("successMessage", "Member created sucessfully!, please signin");
+
+            return "redirect:/sign_in";
+        } catch (DataIntegrityViolationException e) {
+            model.addAttribute("errorMessage", "Email already exists!");
+            return "redirect:/create_user";
+        }
+    }
 
     @GetMapping("/sign_in")
     public String signInForm(Model model) {
@@ -52,20 +67,17 @@ public class UserController {
         if(existingUser == null) {
             System.out.println("user does not exist");
             model.addAttribute("errorMessage", "invalid email and password");
-            return "sign_in";
+            return "redirect:/sign_in";
         }
 
         String existingPassword = existingUser.getPassword();
         if (!user.getPassword().equalsIgnoreCase(existingPassword)) {
             System.out.println("Incorrect password");
             model.addAttribute("errorMessage", "invalid email and password");
-            return "sign_in";
+            return "redirect:/sign_in";
         }
         session.setAttribute("loggedInUser", existingUser);
 
-        if (existingUser.getRole().equalsIgnoreCase("admin")) {
-            return "redirect:/books";
-        }
         return "redirect:/books";
     }
 
@@ -78,6 +90,6 @@ public class UserController {
     @GetMapping("/")
     public String home() {
         System.out.println("Home");
-        return "/";
+        return "redirect:/sign_in";
     }
 }

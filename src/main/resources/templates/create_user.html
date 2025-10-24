@@ -11,7 +11,7 @@
             <div class="col-lg-6 col-sm-6 container justify-content-center card mt-5">
                 <h1 class="text-center">Create User</h1>
                 <div class="card-body">
-                    <form class="row g-3 needs-validation" th:action="@{/api/v1/auth/create_user}" th:object="${user}" method="POST" novalidate>
+                    <form class="row g-3 needs-validation" th:action="@{/create_user}" th:object="${user}" method="POST" novalidate>
                         <div th:if="${successMessage}" class="alert alert-success mt-3">
                             <p th:text="${successMessage}"></p>
                         </div>
@@ -19,7 +19,7 @@
                             <p th:text="${errorMessage}"></p>
                         </div>
                         <div class="col-md-6">
-                            <label for="name" class="form-label">name</label>
+                            <label for="name" class="form-label">Name</label>
                             <input type="text" name="name" th:field="*{name}" class="form-control" id="name" required>
                             <div class="invalid-feedback">
                                 Please provide a firstname.
@@ -57,7 +57,7 @@
                             <label for="role" class="form-label">Role</label>
                             <select id="role" th:field="*{role}" class="form-select" required>
                                 <option value="" disabled selected>Choose...</option>
-                                <option value="Liberian">Liberian</option>
+                                <option value="Librarian">Librarian</option>
                                 <option value="Member">Member</option>
                             </select>
                             <div class="invalid-feedback">

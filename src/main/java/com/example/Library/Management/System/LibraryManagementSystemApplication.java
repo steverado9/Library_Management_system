@@ -23,7 +23,7 @@ public class LibraryManagementSystemApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		User user1 = new User(
-				"Isaac Stephen", "isaac.stephen@library.com", "stephen123", "+1234567890", "10 Library Lane, Lagos", "ADMIN"
+				"Isaac Stephen", "isaac.stephen@library.com", "stephen123", "+1234567890", "10 Library Lane, Lagos", "LIBRARIAN"
 		);
 		userRepository.save(user1);
 	}
