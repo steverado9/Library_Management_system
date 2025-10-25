@@ -19,7 +19,7 @@ public class Book {
     private String yearPublished;
 
     @Column(name = "isbn", nullable = false)
-    private Long ISBN;
+    private String ISBN;
 
     @Column(name = "available", nullable = false)
     private boolean available;
@@ -27,7 +27,7 @@ public class Book {
     //default constructor
     public Book() {}
 
-    public Book(Long id, String title, String author, String yearPublished, Long ISBN, boolean available) {
+    public Book(Long id, String title, String author, String yearPublished, String ISBN, boolean available) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -38,10 +38,6 @@ public class Book {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -68,11 +64,11 @@ public class Book {
         this.yearPublished = yearPublished;
     }
 
-    public Long getISBN() {
+    public String getISBN() {
         return ISBN;
     }
 
-    public void setISBN(Long ISBN) {
+    public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
 
