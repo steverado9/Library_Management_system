@@ -61,19 +61,19 @@ public class UserController {
     }
 
     @PostMapping("/sign_in")
-    public String getUser(@ModelAttribute("user") User user, Model model, HttpSession session) {
+    public String getUser(@ModelAttribute("user") User user, HttpSession session, RedirectAttributes redirectAttributes) {
         User existingUser = userService.getUserByEmail(user.getEmail());
 
         if(existingUser == null) {
             System.out.println("user does not exist");
-            model.addAttribute("errorMessage", "invalid email and password");
+            redirectAttributes.addFlashAttribute("errorMessage", "invalid email and password");
             return "redirect:/sign_in";
         }
 
         String existingPassword = existingUser.getPassword();
         if (!user.getPassword().equalsIgnoreCase(existingPassword)) {
             System.out.println("Incorrect password");
-            model.addAttribute("errorMessage", "invalid email and password");
+            redirectAttributes.addFlashAttribute("errorMessage", "invalid email and password");
             return "redirect:/sign_in";
         }
         session.setAttribute("loggedInUser", existingUser);

@@ -22,7 +22,24 @@
 <!--List of all the books-->
 <div class="container">
     <div class="row">
-
+        <div  class="card m-3" style="width: 18rem;" th:each="book : ${books}">
+            <div class="card-body p-3">
+                <h5 class="card-title">
+                    <a th:text="${book.title}" th:href="@{/book/{id}(id=${book.id})}"  class="text-decoration-none"></a>
+                </h5>
+                <p class="card-text" th:text="${book.author}"></p>
+                <p class="card-text" th:text="${book.ISBN}"></p>
+                <p class="card-text" th:text="${book.yearPublished}"></p>
+                <p class="card-text" th:text="${book.available}"></p>
+                <div class="d-flex">
+                    <a th:if="${librarian}" class="btn btn-primary" th:href="@{book/edit/{id}(id=${book.id})}">Update</a>
+                    <form th:if="${librarian}" th:action="@{/book/delete/{id}(id=${book.id})}" method="post">
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
