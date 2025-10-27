@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class BookController {
 
@@ -69,10 +71,17 @@ public class BookController {
 
     //display list of books
     @GetMapping("/books")
-    public String listOfBooks(Model model, HttpSession session) {
+    public String listOfBooks(@RequestParam(value = "keyword", required = false) String keyword, Model model, HttpSession session) {
+        List<Book> books;
         User loggedInUser = (User) session.getAttribute("loggedInUser");
 
-        model.addAttribute("books", bookService.getAllBooks());
+        if (keyword != null && !keyword.isEmpty()) {
+            books = bookService.searchBooks(keyword);
+        } else {
+            books = bookService.getAllBooks();
+        }
+        model.addAttribute("books", books);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("librarian", loggedInUser.getRole().equalsIgnoreCase("librarian"));
         return "books";
     }

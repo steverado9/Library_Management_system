@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.filter.reactive.HiddenHttpMethodFilter;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @SpringBootApplication
 public class LibraryManagementSystemApplication implements CommandLineRunner {
@@ -16,7 +16,6 @@ public class LibraryManagementSystemApplication implements CommandLineRunner {
 		SpringApplication.run(LibraryManagementSystemApplication.class, args);
 	}
 
-	//used to handle hidden methods, like delete and put
 	@Bean
 	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
 		return new HiddenHttpMethodFilter();

@@ -20,7 +20,7 @@
 <br>
 <div class="container">
     <div class="row">
-        <form th:action="@{/book/edit/{id}(id=${book.id})}" th:object="${book}" th:object="${book}" th:method="post">
+        <form th:action="@{/book/edit/{id}(id=${book.id})}" th:object="${book}" th:method="post">
             <input type="hidden" name="_method" value="put" />
             <div class="input-group mb-3">
                 <span class="input-group-text" id="title">Book title:</span>

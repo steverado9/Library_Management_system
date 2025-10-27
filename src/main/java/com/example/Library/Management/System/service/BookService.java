@@ -7,6 +7,8 @@ import java.util.List;
 public interface BookService {
     List<Book> getAllBooks();
 
+    List<Book> searchBooks(String keyword);
+
     Book saveBook(Book book);
 
     Book getBookById(Long id);
