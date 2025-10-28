@@ -13,7 +13,7 @@
         <h1 class="navbar-brand">List of Books</h1>
         <form th:action="@{/books}" method="get" class="mb-3">
             <div class="input-group">
-                <input type="text" name="keyword" class="form-control" placeholder="Search for a book..." aria-label="Search input with icon">
+                <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Search for a book..." aria-label="Search input with icon">
                 <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
             </div>
         </form>
@@ -32,12 +32,26 @@
         <div  class="card m-3" style="width: 18rem;" th:each="book : ${books}">
             <div class="card-body p-3">
                 <h5 class="card-title">
+                    <strong>Book Title:</strong>
                     <a th:text="${book.title}" th:href="@{/book/{id}(id=${book.id})}"  class="text-decoration-none"></a>
                 </h5>
-                <p class="card-text" th:text="${book.author}"></p>
-                <p class="card-text" th:text="${book.ISBN}"></p>
-                <p class="card-text" th:text="${book.yearPublished}"></p>
-                <p class="card-text" th:text="${book.available}"></p>
+                <p class="card-text">
+                    <strong>Author:</strong>
+                    <span th:text="${book.author}"></span>
+                </p>
+                <p class="card-text">
+                    <strong>ISBN:</strong>
+                    <span th:text="${book.ISBN}"></span>
+                </p>
+                <p class="card-text">
+                    <strong>Year Published:</strong>
+                    <span th:text="${book.yearPublished}"></span>
+                </p>
+                <p>
+                    <strong>Status:</strong>
+                    <span th:text="${book.available} ? 'Available' : 'Borrowed'"
+                          th:classappend="${book.available} ? 'text-success' : 'text-danger'"></span>
+                </p>
                 <div class="d-flex">
                     <a th:if="${librarian}" class="btn btn-primary me-2" th:href="@{book/edit/{id}(id=${book.id})}">Update</a>
                     <form th:if="${librarian}" th:action="@{/book/delete/{id}(id=${book.id})}" method="post">

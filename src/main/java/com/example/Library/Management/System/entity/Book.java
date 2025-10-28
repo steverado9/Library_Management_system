@@ -22,7 +22,7 @@ public class Book {
     private String ISBN;
 
     @Column(name = "available", nullable = false)
-    private boolean available;
+    private boolean available = true;
 
     //default constructor
     public Book() {}
