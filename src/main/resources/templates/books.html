@@ -31,24 +31,24 @@
     <div class="row">
         <div  class="card m-3" style="width: 18rem;" th:each="book : ${books}">
             <div class="card-body p-3">
-                <h5 class="card-title">
-                    <strong>Book Title:</strong>
-                    <a th:text="${book.title}" th:href="@{/book/{id}(id=${book.id})}"  class="text-decoration-none"></a>
-                </h5>
+                <p class="card-title">
+                    <span>Book Title:</span>
+                    <span th:text="${book.title}"></span>
+                </p>
                 <p class="card-text">
-                    <strong>Author:</strong>
+                    <span>Author:</span>
                     <span th:text="${book.author}"></span>
                 </p>
                 <p class="card-text">
-                    <strong>ISBN:</strong>
+                    <span>ISBN:</span>
                     <span th:text="${book.ISBN}"></span>
                 </p>
                 <p class="card-text">
-                    <strong>Year Published:</strong>
+                    <span>Year Published:</span>
                     <span th:text="${book.yearPublished}"></span>
                 </p>
                 <p>
-                    <strong>Status:</strong>
+                    <strong>Book status:</strong>
                     <span th:text="${book.available} ? 'Available' : 'Borrowed'"
                           th:classappend="${book.available} ? 'text-success' : 'text-danger'"></span>
                 </p>
@@ -58,6 +58,14 @@
                         <input type="hidden" name="_method" value="delete" />
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
+                    <div class="mt-3">
+                        <form th:if="${!librarian && book.available}" th:action="@{/book/{id}/borrow(id=${book.id})}" method="post">
+                            <button type="submit" class="btn btn-primary">Borrow</button>
+                        </form>
+                        <form th:if="${!librarian && !book.available}" th:action="@{/book/{id}/return(id=${book.id})}" method="post">
+                            <button type="submit" class="btn btn-warning">Return</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

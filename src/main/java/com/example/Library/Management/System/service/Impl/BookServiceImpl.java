@@ -2,18 +2,24 @@ package com.example.Library.Management.System.service.Impl;
 
 import com.example.Library.Management.System.entity.Book;
 import com.example.Library.Management.System.repository.BookRepository;
+import com.example.Library.Management.System.repository.TransactionRepository;
 import com.example.Library.Management.System.service.BookService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class BookServiceImpl implements BookService {
 
     private BookRepository  bookRepository;
-    public BookServiceImpl(BookRepository bookRepository) {
+    private TransactionRepository transactionRepository;
+
+    public BookServiceImpl(BookRepository bookRepository, TransactionRepository transactionRepository) {
         super();
         this.bookRepository = bookRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     @Override
@@ -43,6 +49,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteBookById(Long id) {
+        this.transactionRepository.deleteByBookId(id);
         bookRepository.deleteById(id);
     }
 

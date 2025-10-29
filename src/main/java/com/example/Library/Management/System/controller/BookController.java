@@ -85,10 +85,4 @@ public class BookController {
         model.addAttribute("librarian", loggedInUser.getRole().equalsIgnoreCase("librarian"));
         return "books";
     }
-    //get a single book using the id
-    @GetMapping("/book/{id}")
-    public String getOneBookForm(@PathVariable Long id, Model model) {
-        model.addAttribute("book", bookService.getBookById(id));
-        return "single_book";
-    }
 }
