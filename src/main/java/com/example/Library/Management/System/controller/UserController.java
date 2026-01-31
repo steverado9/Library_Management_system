@@ -4,6 +4,7 @@ import com.example.Library.Management.System.entity.User;
 import com.example.Library.Management.System.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class UserController {
     private UserService userService;
+    private PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         super();
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/create_user")
@@ -46,7 +49,7 @@ public class UserController {
             userService.saveUser(user);
             redirectAttributes.addFlashAttribute("successMessage", "Member created sucessfully!, please signin");
 
-            return "redirect:/sign_in";
+            return "redirect:/books";
         } catch (DataIntegrityViolationException e) {
             model.addAttribute("errorMessage", "Email already exists!");
             return "redirect:/create_user";
@@ -71,7 +74,8 @@ public class UserController {
         }
 
         String existingPassword = existingUser.getPassword();
-        if (!user.getPassword().equalsIgnoreCase(existingPassword)) {
+        //check existing and submitted password if they match
+        if (!passwordEncoder.matches(user.getPassword(), existingPassword)) {
             System.out.println("Incorrect password");
             redirectAttributes.addFlashAttribute("errorMessage", "invalid email and password");
             return "redirect:/sign_in";
