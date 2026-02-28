@@ -59,4 +59,31 @@ This project demonstrates how to use **Spring Boot**, **Spring Data JPA**, **Thy
 | `returnedDate` | LocalDateTime | When the book was returned |
 
 ---
+## ️ How to Run Locally
+
+### 1. Clone the project
+```bash
+git clone https://github.com/steverado9/Library_Management_system
+cd Library_Management_system
+```
+
+### 2. Configure the database in `application.properties`
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/library_db
+spring.datasource.username=root
+spring.datasource.password=yourpassword
+
+spring.jpa.hibernate.ddl-auto=update
+```
+
+### 3. Run the application
+```bash
+mvn spring-boot:run
+```
+
+### 4. Open your browser at:
+```
+http://localhost:8080
+```
+---
 
