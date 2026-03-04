@@ -36,16 +36,7 @@
                     <span th:text="${book.title}"></span>
                 </p>
                 <p class="card-text">
-                    <span>Author:</span>
-                    <span th:text="${book.author}"></span>
-                </p>
-                <p class="card-text">
-                    <span>ISBN:</span>
-                    <span th:text="${book.ISBN}"></span>
-                </p>
-                <p class="card-text">
-                    <span>Year Published:</span>
-                    <span th:text="${book.yearPublished}"></span>
+                    <a th:href="@{book/{id}(id=${book.id})}">Book details:</a>
                 </p>
                 <p>
                     <strong>Book status:</strong>

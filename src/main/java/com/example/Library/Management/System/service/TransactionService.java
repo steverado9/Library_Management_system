@@ -8,4 +8,6 @@ public interface TransactionService {
     void borrowBook(Book book, Transaction transaction);
 
     void returnBook(Long bookId);
+
+    boolean hasUserReturnedBook(Long id);
 }

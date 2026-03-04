@@ -3,6 +3,7 @@ package com.example.Library.Management.System.controller;
 import com.example.Library.Management.System.entity.Book;
 import com.example.Library.Management.System.entity.User;
 import com.example.Library.Management.System.service.BookService;
+import com.example.Library.Management.System.service.TransactionService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,12 @@ public class BookController {
 
     private BookService bookService;
 
-    public BookController(BookService bookService) {
+    private TransactionService transactionService;
+
+    public BookController(BookService bookService, TransactionService transactionService) {
         super();
         this.bookService = bookService;
+        this.transactionService = transactionService;
     }
 
     //go to the add book page
@@ -84,5 +88,27 @@ public class BookController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("librarian", loggedInUser.getRole().equalsIgnoreCase("librarian"));
         return "books";
+    }
+
+    //go to book details page
+    @GetMapping("/book/{id}")
+    public String bookDetails(@PathVariable Long id, Model model, HttpSession session) {
+
+        Book book = bookService.getBookById(id);
+
+        boolean canReview = false;
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        if (loggedInUser != null ) {
+
+//            check if user borrowed and return the book
+            canReview = transactionService.hasUserReturnedBook(id);
+        }
+
+        model.addAttribute("book", book);
+        model.addAttribute("canReview", canReview);
+
+        return "book_details";
     }
 }

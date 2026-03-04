@@ -2,6 +2,7 @@ package com.example.Library.Management.System.service.Impl;
 
 import com.example.Library.Management.System.entity.Book;
 import com.example.Library.Management.System.entity.Transaction;
+import com.example.Library.Management.System.entity.User;
 import com.example.Library.Management.System.repository.BookRepository;
 import com.example.Library.Management.System.repository.TransactionRepository;
 import com.example.Library.Management.System.service.TransactionService;
@@ -39,5 +40,15 @@ public class TransactionServiceImpl implements TransactionService {
         Book book = transaction.getBook();
         book.setAvailable(true);
         bookRepository.save(book);
+    }
+
+    @Override
+    public boolean hasUserReturnedBook(Long id) {
+        Transaction transaction = transactionRepository.findByBookIdAndStatus(id, "RETURNED");
+        if (transaction == null) {
+            return false;
+        }
+
+        return true;
     }
 }

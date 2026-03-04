@@ -2,6 +2,8 @@ package com.example.Library.Management.System.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "books")
 public class Book {
@@ -24,6 +26,9 @@ public class Book {
     @Column(name = "available", nullable = false)
     private boolean available = true;
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Review> reviews;
+
     //default constructor
     public Book() {}
 
@@ -34,6 +39,7 @@ public class Book {
         this.yearPublished = yearPublished;
         this.ISBN = ISBN;
         this.available = available;
+        this.reviews = null;
     }
 
     public Long getId() {
@@ -80,5 +86,11 @@ public class Book {
         this.available = available;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
 
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 }

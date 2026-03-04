@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+        <h1 class="navbar-brand">
+            Book Details
+        </h1>
+        <ul class="d-flex list-unstyled" role="search">
+            <li class="me-4"><a class="text-white text-decoration-none" th:href="@{/books}">List of books</a></li>
+        </ul>
+    </div>
+</nav>
+<br>
+<br>
+<div class="container">
+    <h2 th:text="${book.title}"></h2>
+
+    <p><strong>Author:</strong> <span th:text="${book.author}"></span></p>
+    <p><strong>ISBN:</strong> <span th:text="${book.ISBN}"></span></p>
+    <p><strong>Year:</strong> <span th:text="${book.yearPublished}"></span></p>
+
+    <h3>Reviews</h3>
+    <div th:if="${book.reviews == null}">
+        <p>No reviews yet.</p>
+    </div>
+
+    <div th:each="review : ${book.reviews}">
+        <p>
+            <span th:text="${review.rating}"></span>
+            <span th:text="${review.comment}"></span>
+        </p>
+    </div>
+
+    <div th:if="${canReview}">
+        <a th:href="@{/book/{id}/review(id=${book.id})}"
+           class="btn btn-success mt-3">
+            Write Review
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
