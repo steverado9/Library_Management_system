@@ -9,6 +9,7 @@ import com.example.Library.Management.System.service.TransactionService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -43,12 +44,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public boolean hasUserReturnedBook(Long id) {
-        Transaction transaction = transactionRepository.findByBookIdAndStatus(id, "RETURNED");
-        if (transaction == null) {
-            return false;
-        }
-
-        return true;
+    public boolean hasUserReturnedBook(Long bookId, Long userId ) {
+        return transactionRepository.existsByBookIdAndUserIdAndStatus(bookId, userId, "RETURNED");
     }
 }

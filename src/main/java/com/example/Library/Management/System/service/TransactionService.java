@@ -9,5 +9,5 @@ public interface TransactionService {
 
     void returnBook(Long bookId);
 
-    boolean hasUserReturnedBook(Long id);
+    boolean hasUserReturnedBook(Long bookId, Long userId);
 }

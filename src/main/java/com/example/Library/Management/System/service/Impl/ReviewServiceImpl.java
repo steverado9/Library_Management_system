@@ -29,17 +29,17 @@ public class ReviewServiceImpl implements ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    @Override
-    public void addReview(Long userId, Long bookId, int rating, String comment) {
-        //Did the user borrow the book?
-        //Is the status RETURNED?
-        transactionRepository.findByBookIdAndStatus(bookId, "RETURNED");
-    }
+//    @Override
+//    public void addReview(Long userId, Long bookId, int rating, String comment) {
+//        //Did the user borrow the book?
+//        //Is the status RETURNED?
+//        transactionRepository.findByBookIdAndStatus(bookId, "RETURNED");
+//    }
 
     @Override
-    public void saveReview(String name, Long bookId, Review review) {
+    public void saveReview(String email, Long bookId, Review review) {
 
-        User user = userRepository.findByName(name);
+        User user = userRepository.findByEmail(email);
         Book book = bookRepository.findById(bookId).orElseThrow();
 
         review.setUser(user);

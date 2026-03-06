@@ -21,25 +21,25 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping("/book/{id}/review")
-    public String showReviewForm(@PathVariable Long id, Model model) {
+    @GetMapping("/book/{bookId}/review")
+    public String showReviewForm(@PathVariable Long bookId, Model model) {
 
         Review review = new Review();
         model.addAttribute("review", review);
-        model.addAttribute("bookId", id);
+        model.addAttribute("bookId", bookId);
 
         return "review_form";
     }
 
-    @PostMapping("/book/{id}/review")
-    public String submitReview(@PathVariable Long id, @ModelAttribute Review review, HttpSession session) {
+    @PostMapping("/book/{bookId}/review")
+    public String submitReview(@PathVariable Long bookId, @ModelAttribute Review review, HttpSession session) {
 
         User loggedInUser = (User) session.getAttribute("loggedInUser");
 
-        String name = loggedInUser.getName();
+        String email = loggedInUser.getEmail();
 
-        reviewService.saveReview(name, id, review);
+        reviewService.saveReview(email, bookId, review);
 
-        return "redirect:/book/" + id;
+        return "redirect:/book/" + bookId;
     }
 }

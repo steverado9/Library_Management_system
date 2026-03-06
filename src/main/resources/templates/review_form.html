@@ -19,18 +19,22 @@
 </nav>
 <br>
 <br>
-<h2>Write Your Review</h2>
+<div class="container">
+    <div class="row">
+        <h2>Write Your Review</h2>
 
-<form th:action="@{/book/{id}/review(id={bookId})}" th:object="${review}" method="post">
-    <label>Rating (1-5)</label>
-    <input type="number" th:field="*{rating}" min="1" max="5" required>
-    <br><br>
+        <form th:action="@{/book/{bookId}/review(bookId=${bookId})}" th:object="${review}" method="post">
+            <strong>Rating (1-5): </strong>
+            <input type="number" th:field="*{rating}" min="1" max="5" required>
+            <br><br>
 
-    <label>Comment</label>
-    <textarea th:field="*{comment}" required></textarea>
-    <br><br>
+            <label>Leave a comment</label><br>
+            <textarea th:field="*{comment}" required></textarea>
+            <br><br>
 
-    <button type="submit">Submit Review</button>
-</form>
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

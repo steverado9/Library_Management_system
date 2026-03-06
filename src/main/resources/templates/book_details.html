@@ -32,13 +32,17 @@
 
     <div th:each="review : ${book.reviews}">
         <p>
+            <strong>Rating:</strong>
             <span th:text="${review.rating}"></span>
+        </p>
+        <p>
+            <strong>Review:</strong>
             <span th:text="${review.comment}"></span>
         </p>
     </div>
 
     <div th:if="${canReview}">
-        <a th:href="@{/book/{id}/review(id=${book.id})}"
+        <a th:href="@{/book/{bookId}/review(bookId=${book.id})}"
            class="btn btn-success mt-3">
             Write Review
         </a>

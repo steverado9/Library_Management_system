@@ -91,10 +91,10 @@ public class BookController {
     }
 
     //go to book details page
-    @GetMapping("/book/{id}")
-    public String bookDetails(@PathVariable Long id, Model model, HttpSession session) {
+    @GetMapping("/book/{bookId}")
+    public String bookDetails(@PathVariable Long bookId, Model model, HttpSession session) {
 
-        Book book = bookService.getBookById(id);
+        Book book = bookService.getBookById(bookId);
 
         boolean canReview = false;
 
@@ -102,8 +102,10 @@ public class BookController {
 
         if (loggedInUser != null ) {
 
+            Long userId = loggedInUser.getId();
+
 //            check if user borrowed and return the book
-            canReview = transactionService.hasUserReturnedBook(id);
+            canReview = transactionService.hasUserReturnedBook(bookId, userId);
         }
 
         model.addAttribute("book", book);
