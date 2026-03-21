@@ -8,6 +8,7 @@ import com.example.Library.Management.System.service.BookService;
 import com.example.Library.Management.System.service.TransactionService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -48,7 +49,16 @@ public class TransactionController {
 
     //Return a book
     @PostMapping("/book/{id}/return")
-    public String returnBook(@PathVariable Long id) {
+    public String returnBook(@PathVariable Long id, HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        Transaction transaction = transactionService.getActiveTransactionByBookId(id);
+
+        if (transaction == null || !transaction.getUser().getId().equals(loggedInUser.getId())) {
+            throw new RuntimeException("Unauthorized action");
+        }
+
         transactionService.returnBook(id);
         return "redirect:/books";
     }

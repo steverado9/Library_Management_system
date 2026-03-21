@@ -45,7 +45,7 @@
                 </p>
                 <div class="d-flex">
                     <a th:if="${librarian}" class="btn btn-primary me-2" th:href="@{book/edit/{id}(id=${book.id})}">Update</a>
-                    <form th:if="${librarian}" th:action="@{/book/delete/{id}(id=${book.id})}" method="post">
+                    <form th:if="${librarian}" th:action="@{/book/delete/{id}(id=${book.id})}" method="post" class="delete-form">
                         <input type="hidden" name="_method" value="delete" />
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
@@ -53,7 +53,7 @@
                         <form th:if="${!librarian && book.available}" th:action="@{/book/{id}/borrow(id=${book.id})}" method="post">
                             <button type="submit" class="btn btn-primary">Borrow</button>
                         </form>
-                        <form th:if="${!librarian && !book.available}" th:action="@{/book/{id}/return(id=${book.id})}" method="post">
+                        <form th:if="${canReturnMap[book.id]}" th:action="@{/book/{id}/return(id=${book.id})}" method="post">
                             <button type="submit" class="btn btn-warning">Return</button>
                         </form>
                     </div>
@@ -62,5 +62,30 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.querySelectorAll(".delete-form").forEach(form => {
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action cannot be undone!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

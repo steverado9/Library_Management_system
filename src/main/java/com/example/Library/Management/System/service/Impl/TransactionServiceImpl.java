@@ -47,4 +47,14 @@ public class TransactionServiceImpl implements TransactionService {
     public boolean hasUserReturnedBook(Long bookId, Long userId ) {
         return transactionRepository.existsByBookIdAndUserIdAndStatus(bookId, userId, "RETURNED");
     }
+
+    @Override
+    public boolean isBookBorrowedByUser(Long bookId, Long userId) {
+        return transactionRepository.existsByBookIdAndUserIdAndStatus(bookId, userId, "BORROWED");
+    }
+
+    @Override
+    public Transaction getActiveTransactionByBookId(Long bookId) {
+        return transactionRepository.findByBookIdAndStatus(bookId, "BORROWED");
+    }
 }

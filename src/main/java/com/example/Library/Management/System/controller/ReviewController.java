@@ -22,7 +22,12 @@ public class ReviewController {
     }
 
     @GetMapping("/book/{bookId}/review")
-    public String showReviewForm(@PathVariable Long bookId, Model model) {
+    public String showReviewForm(@PathVariable Long bookId, Model model, HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/sign_in";
+        }
 
         Review review = new Review();
         model.addAttribute("review", review);

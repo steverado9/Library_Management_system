@@ -10,4 +10,8 @@ public interface TransactionService {
     void returnBook(Long bookId);
 
     boolean hasUserReturnedBook(Long bookId, Long userId);
+
+    boolean isBookBorrowedByUser(Long bookId, Long userId);
+
+    Transaction getActiveTransactionByBookId(Long id);
 }
